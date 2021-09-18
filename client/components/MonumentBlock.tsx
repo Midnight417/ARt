@@ -1,27 +1,105 @@
 import React from "react";
 import { Text, View } from './Themed';
-import { Image, Button, StyleSheet } from "react-native";
+import { Image, Button, StyleSheet, useColorScheme, Pressable, Dimensions } from "react-native";
+import Colors from "../constants/Colors";
 
 interface MonumentBlockProps {
     name: string;
     owner: string;
-    details: string;
+    children: string;
     image: string;
+    pos?: "first" | "last" | "middle";
 };
 
-export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, creator, details, image }) => {
 
-    return(
-        <View>
+export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos }) => {
+    const colorScheme = useColorScheme();
+
+    const width = Dimensions.get('window').width - 40;
+
+    const styles = StyleSheet.create({
+        image: {
+            width: "100%",
+            height: 250,
+            borderTopRightRadius: 8,
+            borderTopLeftRadius: 8
+        },
+        container: {
+            backgroundColor: Colors[colorScheme!].background,
+
+            borderWidth: 1,
+            borderColor: Colors[colorScheme!].tabIconDefault,
+            borderRadius: 8,
+
+            height: 425,
+            width: width,
+
+            marginBottom: pos == "last" ? 48 : 24,
+
+            marginTop: pos == "first" ? 24 : 0,
+
+            display: "flex",
+            alignItems: "center",
+        },
+        textbox: {
+            display: "flex",
+            alignItems: "flex-start",
+            width: "100%",
+
+            flexGrow: 1,
+
+            padding: 8
+        },
+        title: {
+            fontSize: 24,
+            marginBottom: 4
+        },
+        owner: {
+            fontSize: 16,
+            color: Colors[colorScheme!].tabIconDefault,
+            marginBottom: 8
+        },
+        text: {
+            fontSize: 16,
+            color: Colors[colorScheme!].tabIconDefault,
+
+        },
+        button: {
+            padding: 8,
+
+            width: "100%",
+        },
+        btnBg: {
+            backgroundColor: Colors[colorScheme!].tabIconSelected,
+            borderRadius: 8,
+        },
+        btnText: {
+            color: Colors[colorScheme!].background,
+
+            padding: 8,
+
+            textAlign: "center"
+        }
+    })
+
+    return (
+        <View style={styles.container}>
             <Image
-                source={ "https://www.biography.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTE5NTU2MzE2MzcyODk1MjQz/socrates-9488126-1-402.jpg" }
+                style={styles.image}
+                source={{ uri: image }}
             />
-            <Text>{ name }</Text>
-            <View>
-                <Text>{ owner }</Text>
-                <Text>{ details }</Text>
-                <Button title="Check in store" />
+            <View style={styles.textbox}>
+                <Text style={styles.title}>{name}</Text>
+                <Text style={styles.owner}>Owned by: {owner}</Text>
+                <Text style={styles.text} numberOfLines={2}>{children}</Text>
             </View>
+            <Pressable style={styles.button} onPress={() => {
+
+            }}>
+                <View style={styles.btnBg}>
+                    <Text style={styles.btnText}>Check in store</Text>
+                </View>
+            </Pressable>
         </View>
     );
 };

@@ -6,29 +6,31 @@ interface SearchBarProps {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }, 
-  searchBar: {
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    searchBar: {
 
-  },
-  searchInput: {
+    },
+    searchInput: {
 
-  }
+    }
 });
 
 export const SearchBar: React.FC<SearchBarProps> = ({ useInput }) => {
 
     const [input, setInput] = useInput;
 
-    return(
+    return (
         <SafeAreaView style={styles.container}>
             <View style={styles.searchBar}>
                 <TextInput
-                style={styles.searchInput}
-                placeholder="Search"
+                    style={styles.searchInput}
+                    placeholder="Search"
+                    value={input}
+                    onChangeText={setInput}
                 />
             </View>
         </SafeAreaView>
