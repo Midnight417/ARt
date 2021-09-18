@@ -12,7 +12,7 @@
 
 		}
 		/**
-   * Loads and parses a MTL asset from a URL.
+   * Loads as well as parses a MTL asset from a URL.
    *
    * @param {String} url - URL to the MTL file.
    * @param {Function} [onLoad] - Callback invoked with the loaded object.
