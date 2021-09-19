@@ -21,6 +21,7 @@ export default function App() {
       Alert.alert('Access denied')
     }
   }
+  const photo = ""
   const __takePicture = async () => {
     const photo: any = await camera.takePictureAsync()
     console.log(photo)
@@ -28,7 +29,8 @@ export default function App() {
     //setStartCamera(false)
     setCapturedImage(photo)
   }
-  const __savePhoto = () => {}
+  const __savePhoto = () => {
+  }
   const __retakePicture = () => {
     setCapturedImage(null)
     setPreviewVisible(false)
