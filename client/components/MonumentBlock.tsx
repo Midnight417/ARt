@@ -3,6 +3,8 @@ import { Text, View } from './Themed';
 import { Image, StyleSheet, useColorScheme, Pressable, Dimensions } from "react-native";
 import Colors from "../constants/Colors";
 import { MonumentModal } from "./MonumentModal";
+import { MonumentInfo } from "../types";
+import { StoreModal } from "./StoreModal";
 
 interface MonumentBlockProps {
     name: string;
@@ -11,10 +13,12 @@ interface MonumentBlockProps {
     image: string;
     pos?: "last";
     btnText?: string;
+    data: MonumentInfo;
+    type?: "store" | "owned";
 };
 
 
-export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos, btnText }) => {
+export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos, btnText, data, type }) => {
     const colorScheme = useColorScheme();
 
     const width = Dimensions.get('window').width - 40;
@@ -56,12 +60,12 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
         },
         owner: {
             fontSize: 16,
-            color: Colors[colorScheme!].tabIconDefault,
+            color: Colors[colorScheme!].text,
             marginBottom: 8
         },
         text: {
             fontSize: 16,
-            color: Colors[colorScheme!].tabIconDefault,
+            color: Colors[colorScheme!].text,
         },
         button: {
             padding: 8,
@@ -102,7 +106,11 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
                 </View>
             </Pressable>
 
-            <MonumentModal {...{ name, owner, image, children, pos, btnText, visible: modalOpen }} />
+            {type == "store"
+                ? <StoreModal data={data} useModalOpen={[modalOpen, setModalOpen]} />
+                : <MonumentModal data={data} useModalOpen={[modalOpen, setModalOpen]} />
+            }
+
         </View>
     );
 };

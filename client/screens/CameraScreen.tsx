@@ -2,6 +2,7 @@ import {StatusBar} from 'expo-status-bar'
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image} from 'react-native'
 import {Camera} from 'expo-camera'
+import { CameraType } from 'expo-camera/build/Camera.types'
 
 let camera: Camera
 export default function App() {
@@ -46,9 +47,9 @@ export default function App() {
   }
   const __switchCamera = () => {
     if (cameraType === 'back') {
-      setCameraType('front')
+      setCameraType(CameraType.front)
     } else {
-      setCameraType('back')
+      setCameraType(CameraType.back)
     }
   }
   return (
@@ -65,10 +66,10 @@ export default function App() {
           ) : (
             <Camera
               type={cameraType}
-              flashMode={flashMode}
+              flashMode={flashMode as number | "off" | "on" | "auto" | "torch" | undefined}
               style={{flex: 1}}
               ref={(r) => {
-                camera = r
+                camera = r!
               }}
             >
               <View
@@ -92,7 +93,7 @@ export default function App() {
                     onPress={__handleFlashMode}
                     style={{
                       backgroundColor: flashMode === 'off' ? '#000' : '#fff',
-                      borderRadius: '50%',
+                      borderRadius: 25,
                       height: 25,
                       width: 25
                     }}
@@ -109,7 +110,7 @@ export default function App() {
                     onPress={__switchCamera}
                     style={{
                       marginTop: 20,
-                      borderRadius: '50%',
+                      borderRadius: 25,
                       height: 25,
                       width: 25
                     }}
