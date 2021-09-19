@@ -18,10 +18,10 @@ import MonumentsScreen from '../screens/MonumentsScreen';
 import CameraScreen from '../screens/CameraScreen';
 import StoreScreen from '../screens/StoreScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 import { StyleSheet } from 'react-native';
+import { TransactionModal } from '../components/TransactionModal';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -37,13 +37,16 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
  */
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Group>
+        <Stack.Screen name="Transaction" component={TransactionModal} options={{ title: 'Transaction' }} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -52,12 +55,12 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
+const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
-  
+
   const styles = StyleSheet.create({
     centerNavItem: {
       backgroundColor: Colors[colorScheme].background,
@@ -65,7 +68,7 @@ function BottomTabNavigator() {
       borderWidth: 1,
       borderColor: Colors[colorScheme].tabIconDefault,
       borderRadius: 50,
-      
+
       height: 75,
       width: 75,
 
@@ -82,7 +85,7 @@ function BottomTabNavigator() {
       borderWidth: 1,
       borderColor: Colors[colorScheme].tabIconSelected,
       borderRadius: 50,
-      
+
       height: 75,
       width: 75,
 
@@ -108,7 +111,7 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="Map"
         component={MapScreen}
-        options={({ navigation }: RootTabScreenProps<'Map'>) => ({
+        options={({ navigation }) => ({
           title: 'Map',
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
         })}

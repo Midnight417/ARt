@@ -6,6 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from "expo-linear-gradient";
 import { MonumentInfo } from "../types";
 import Animated, { EasingNode } from 'react-native-reanimated';
+import { TransactionModal } from "./TransactionModal";
 
 
 
@@ -19,6 +20,7 @@ export const StoreModal: React.FC<StoreModalProps> = ({ data, useModalOpen }) =>
     const colorScheme = useColorScheme();
 
     const [modalOpen, setModalOpen] = useModalOpen;
+    const [transactionModalOpen, setTransactionModalOpen] = useState(false);
     const [smallImg, setSmallImg] = useState(false);
 
     const heightAnim = useRef(new Animated.Value(400)).current
@@ -77,7 +79,7 @@ export const StoreModal: React.FC<StoreModalProps> = ({ data, useModalOpen }) =>
             width: "100%",
             height: 64,
             position: "absolute",
-            zIndex: 5
+            zIndex: 1
         },
         btnContainer: {
             width: 24,
@@ -177,13 +179,14 @@ export const StoreModal: React.FC<StoreModalProps> = ({ data, useModalOpen }) =>
             </ScrollView>
 
             <Pressable style={styles.button} onPress={() => {
-                setModalOpen(true);
+                setTransactionModalOpen(true);
             }}>
                 <View style={styles.btnBg}>
                     <Text style={styles.btnText}>Buy Monument</Text>
                 </View>
             </Pressable>
 
+            <TransactionModal useModalOpen={[transactionModalOpen, setTransactionModalOpen]} />
         </Modal>
     );
 };
