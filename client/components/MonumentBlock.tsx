@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from './Themed';
-import { Image, Button, StyleSheet, useColorScheme, Pressable, Dimensions } from "react-native";
+import { Image, StyleSheet, useColorScheme, Pressable, Dimensions } from "react-native";
 import Colors from "../constants/Colors";
+import { MonumentModal } from "./MonumentModal";
 
 interface MonumentBlockProps {
     name: string;
     owner: string;
     children: string;
     image: string;
-    pos?: "first" | "last" | "middle";
+    pos?: "last";
+    btnText?: string;
 };
 
 
-export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos }) => {
+export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos, btnText }) => {
     const colorScheme = useColorScheme();
 
     const width = Dimensions.get('window').width - 40;
@@ -34,9 +36,7 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
             height: 425,
             width: width,
 
-            marginBottom: pos == "last" ? 48 : 24,
-
-            marginTop: pos == "first" ? 24 : 0,
+            marginBottom: pos == "last" ? 196 : 24,
 
             display: "flex",
             alignItems: "center",
@@ -62,7 +62,6 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
         text: {
             fontSize: 16,
             color: Colors[colorScheme!].tabIconDefault,
-
         },
         button: {
             padding: 8,
@@ -82,6 +81,8 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
         }
     })
 
+    const [modalOpen, setModalOpen] = useState(false)
+
     return (
         <View style={styles.container}>
             <Image
@@ -94,12 +95,14 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
                 <Text style={styles.text} numberOfLines={2}>{children}</Text>
             </View>
             <Pressable style={styles.button} onPress={() => {
-
+                setModalOpen(true);
             }}>
                 <View style={styles.btnBg}>
-                    <Text style={styles.btnText}>Check in store</Text>
+                    <Text style={styles.btnText}>{btnText || "View Details"}</Text>
                 </View>
             </Pressable>
+
+            <MonumentModal {...{ name, owner, image, children, pos, btnText, visible: modalOpen }} />
         </View>
     );
 };
