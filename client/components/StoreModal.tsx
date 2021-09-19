@@ -7,13 +7,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MonumentInfo } from "../types";
 import Animated, { EasingNode } from 'react-native-reanimated';
 
-interface MonumentModalProps {
+
+
+interface StoreModalProps {
     data: MonumentInfo
     useModalOpen: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 };
 
 
-export const MonumentModal: React.FC<MonumentModalProps> = ({ data, useModalOpen }) => {
+export const StoreModal: React.FC<StoreModalProps> = ({ data, useModalOpen }) => {
     const colorScheme = useColorScheme();
 
     const [modalOpen, setModalOpen] = useModalOpen;
@@ -100,7 +102,25 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ data, useModalOpen
             alignItems: "center",
             flexGrow: 1
         },
+        button: {
+            padding: 8,
+
+            width: "100%",
+        },
+        btnBg: {
+            backgroundColor: Colors[colorScheme!].tabIconSelected,
+            borderRadius: 8,
+        },
+        btnText: {
+            color: Colors[colorScheme!].background,
+
+            padding: 8,
+
+            textAlign: "center"
+        }
     })
+
+    
 
     const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
         if (!smallImg && e.nativeEvent.contentOffset.y > 30) {
@@ -155,6 +175,14 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ data, useModalOpen
                 <Text style={styles.owner}>Created by: {data.creator}</Text>
                 <Text style={styles.text}>{data.description}</Text>
             </ScrollView>
+
+            <Pressable style={styles.button} onPress={() => {
+                setModalOpen(true);
+            }}>
+                <View style={styles.btnBg}>
+                    <Text style={styles.btnText}>Buy Monument</Text>
+                </View>
+            </Pressable>
 
         </Modal>
     );

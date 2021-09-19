@@ -6,4 +6,6 @@ export interface MonumentInfo {
     coordinates: { latitude: number, longitude: number };
     image: string;
     description: string;
+    value: number;
+    views: number;
 }
