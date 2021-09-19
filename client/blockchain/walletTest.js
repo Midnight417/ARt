@@ -1,6 +1,6 @@
-const NFT = require("./NFT.json");
-const Market = require("./NFTMarket.json");
-const ethers = require("ethers");
+import * as NFT from "./NFT.json";
+import * as Market from "./NFTMarket.json";
+import * as ethers from "ethers";
 
 var nftaddress = "0x7C728214be9A0049e6a86f2137ec61030D0AA964";
 var marketaddress = "0xaD888d0Ade988EbEe74B8D4F39BF29a8d0fe8A8D";

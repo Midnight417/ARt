@@ -22,6 +22,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 
 import { StyleSheet } from 'react-native';
 import { TransactionModal } from '../components/TransactionModal';
+import ArScreen from '../screens/arScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -126,7 +127,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Camera"
-        component={CameraScreen}
+        component={ArScreen}
         options={{
           title: 'Camera',
           tabBarIcon: ({ color, focused }) => (
