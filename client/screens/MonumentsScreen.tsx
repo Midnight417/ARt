@@ -3,20 +3,25 @@ import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import { View } from '../components/Themed';
 import { MonumentBlock } from "../components/MonumentBlock";
 import { SearchBar } from '../components/SearchBar';
+import { MonumentInfo } from '../types';
 export default function MonumentsScreen() {
 
   const [search, setInput] = useState("");
 
-  const data = [{
+  const data: MonumentInfo[] = [{
     id: "1",
     name: "Socrates Statue",
     owner: "Leo Tian",
+    creator: "Leo Tian",
+    coordinates: { latitude: 51.5078788, longitude: -0.0877321 },
     image: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg",
     description: " A statue of Socrates. Socrates was a Greek philosopher from Athens who is credited as a founder of Western philosophy and the first moral philosopher of the Western ethical tradition of thought."
   }, {
     id: "2",
     name: "Socrates Painting",
     owner: "Leo Tian",
+    creator: "Leo Tian",
+    coordinates: { latitude: 51.5078788, longitude: -0.0877321 },
     image: "https://www.history.com/.image/t_share/MTU3ODc5MDg2NDMzNTEwNzI5/death-of-socrates.jpg",
     description: " A statue of Socrates. Socrates was a Greek philosopher from Athens who is credited as a founder of Western philosophy and the first moral philosopher of the Western ethical tradition of thought."
   }];
@@ -39,6 +44,7 @@ export default function MonumentsScreen() {
               owner={item.owner}
               image={item.image}
               pos={index == (filteredData.length - 1) ? "last" : undefined}
+              data={item}
             >
               {item.description}
             </MonumentBlock>

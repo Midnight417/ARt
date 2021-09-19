@@ -1,21 +1,19 @@
 import React from "react";
 import { Text, View } from './Themed';
-import { Image, StyleSheet, useColorScheme, Pressable, Modal } from "react-native";
+import { Image, StyleSheet, useColorScheme, Pressable, Modal, ScrollView } from "react-native";
 import Colors from "../constants/Colors";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from "expo-linear-gradient";
+import { MonumentInfo } from "../types";
 
 
 interface MonumentModalProps {
-    name: string;
-    owner: string;
-    children: string;
-    image: string;
+    data: MonumentInfo
     useModalOpen: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 };
 
 
-export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image, children, useModalOpen }) => {
+export const MonumentModal: React.FC<MonumentModalProps> = ({ data, useModalOpen }) => {
     const colorScheme = useColorScheme();
 
     const [modalOpen, setModalOpen] = useModalOpen;
@@ -31,13 +29,13 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image
         },
         title: {
             fontSize: 36,
-            marginBottom: 8,
+            marginBottom: 16,
             color: Colors[colorScheme!].title,
         },
         owner: {
             fontSize: 16,
             color: Colors[colorScheme!].text,
-            marginBottom: 8
+            marginBottom: 16
         },
         text: {
             fontSize: 16,
@@ -79,13 +77,14 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image
 
             <Image
                 style={styles.image}
-                source={{ uri: image }}
+                source={{ uri: data.image }}
             />
-            <View style={styles.textbox}>
-                <Text style={styles.title}>{name}</Text>
-                <Text style={styles.owner}>Owned by: {owner}</Text>
-                <Text style={styles.text}>{children}</Text>
-            </View>
+            <ScrollView style={styles.textbox}>
+                <Text style={styles.title}>{data.name}</Text>
+                <Text style={styles.owner}>Owned by: {data.owner}</Text>
+                <Text style={styles.owner}>Created by: {data.creator}</Text>
+                <Text style={styles.text}>{data.description}</Text>
+            </ScrollView>
             {/* <Pressable style={styles.button} onPress={() => {
                 setModalOpen(true);
             }}>

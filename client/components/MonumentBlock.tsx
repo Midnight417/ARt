@@ -3,6 +3,7 @@ import { Text, View } from './Themed';
 import { Image, StyleSheet, useColorScheme, Pressable, Dimensions } from "react-native";
 import Colors from "../constants/Colors";
 import { MonumentModal } from "./MonumentModal";
+import { MonumentInfo } from "../types";
 
 interface MonumentBlockProps {
     name: string;
@@ -11,10 +12,11 @@ interface MonumentBlockProps {
     image: string;
     pos?: "last";
     btnText?: string;
+    data: MonumentInfo;
 };
 
 
-export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos, btnText }) => {
+export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos, btnText, data }) => {
     const colorScheme = useColorScheme();
 
     const width = Dimensions.get('window').width - 40;
@@ -102,7 +104,7 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
                 </View>
             </Pressable>
 
-            <MonumentModal {...{ name, owner, image, children, pos, btnText, useModalOpen: [modalOpen, setModalOpen] }} />
+            <MonumentModal data={data} useModalOpen={[modalOpen, setModalOpen]} />
         </View>
     );
 };
