@@ -17,8 +17,6 @@ interface MonumentModalProps {
 export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image, children, pos, btnText, visible }) => {
     const colorScheme = useColorScheme();
 
-    const width = Dimensions.get('window').width - 40;
-
     const styles = StyleSheet.create({
         image: {
             width: "100%",
@@ -30,7 +28,8 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image
         },
         title: {
             fontSize: 36,
-            marginBottom: 8
+            marginBottom: 8,
+            color: Colors[colorScheme!].title,
         },
         owner: {
             fontSize: 16,
@@ -46,6 +45,11 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image
         btnBg: {
         },
         btnText: {
+        },
+        searchIcon: {
+            marginBottom: -2,
+            marginLeft: 4,
+            marginRight: 16
         }
     })
 
@@ -68,7 +72,7 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image
                     <Text style={styles.btnText}>{btnText || "View Details"}</Text>
                 </View>
             </Pressable> */}
-            
+
         </Modal>
     );
 };
