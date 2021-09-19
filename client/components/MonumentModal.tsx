@@ -1,21 +1,24 @@
 import React from "react";
 import { Text, View } from './Themed';
-import { Image, Button, StyleSheet, useColorScheme, Pressable, Dimensions, Modal } from "react-native";
+import { Image, StyleSheet, useColorScheme, Pressable, Modal } from "react-native";
 import Colors from "../constants/Colors";
+import { FontAwesome5 } from '@expo/vector-icons';
+import { LinearGradient } from "expo-linear-gradient";
+
 
 interface MonumentModalProps {
     name: string;
     owner: string;
     children: string;
     image: string;
-    pos?: "last";
-    btnText?: string;
-    visible: boolean;
+    useModalOpen: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 };
 
 
-export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image, children, pos, btnText, visible }) => {
+export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image, children, useModalOpen }) => {
     const colorScheme = useColorScheme();
+
+    const [modalOpen, setModalOpen] = useModalOpen;
 
     const styles = StyleSheet.create({
         image: {
@@ -24,7 +27,7 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image
             maxHeight: 400
         },
         textbox: {
-            margin: 8
+            margin: 16
         },
         title: {
             fontSize: 36,
@@ -40,21 +43,39 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ name, owner, image
             fontSize: 16,
             color: Colors[colorScheme!].text,
         },
-        button: {
+        btnShade: {
+            width: "100%",
+            height: 64,
+            position: "absolute",
+            zIndex: 5
         },
-        btnBg: {
-        },
-        btnText: {
+        btnContainer: {
+            width: 24,
+            height: 24,
+
+            position: "absolute",
+            right: 16,
+            top: 16
         },
         searchIcon: {
             marginBottom: -2,
-            marginLeft: 4,
-            marginRight: 16
         }
     })
 
     return (
-        <Modal animationType="slide" visible={visible} presentationStyle="formSheet">
+        <Modal animationType="slide" visible={modalOpen} presentationStyle="formSheet">
+
+
+            <LinearGradient
+                colors={["rgba(0,0,0,0.75)", "rgba(0,0,0,0)"]}
+                style={styles.btnShade}
+            >
+                <Pressable style={styles.btnContainer} onPress={() => {
+                    setModalOpen(false);
+                }}>
+                    <FontAwesome5 size={24} style={styles.searchIcon} name="times" color={Colors[colorScheme!].tabIconDefault} />
+                </Pressable>
+            </LinearGradient>
 
             <Image
                 style={styles.image}

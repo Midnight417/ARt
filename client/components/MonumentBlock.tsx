@@ -56,12 +56,12 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
         },
         owner: {
             fontSize: 16,
-            color: Colors[colorScheme!].tabIconDefault,
+            color: Colors[colorScheme!].text,
             marginBottom: 8
         },
         text: {
             fontSize: 16,
-            color: Colors[colorScheme!].tabIconDefault,
+            color: Colors[colorScheme!].text,
         },
         button: {
             padding: 8,
@@ -102,7 +102,7 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
                 </View>
             </Pressable>
 
-            <MonumentModal {...{ name, owner, image, children, pos, btnText, visible: modalOpen }} />
+            <MonumentModal {...{ name, owner, image, children, pos, btnText, useModalOpen: [modalOpen, setModalOpen] }} />
         </View>
     );
 };
