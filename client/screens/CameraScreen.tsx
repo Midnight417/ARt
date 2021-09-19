@@ -1,18 +1,24 @@
-import React from 'react';
-import { View } from 'react-native';
-import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
-import { Renderer } from 'expo-three';
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
 
-export default function App() {
+import { Text, View } from '../components/Themed';
+
+export default function CameraScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <GLView style={{ width: 300, height: 300 }} onContextCreate={onContextCreate} />
+    <View style={styles.container}>
+      <Text style={styles.title}>#TODO: Implement Camera</Text>
     </View>
   );
 }
 
-function onContextCreate(gl: ExpoWebGLRenderingContext) {
-  // Initialize renderer…
-  const renderer = new Renderer({ gl });
-  (renderer as any).setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
-}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
