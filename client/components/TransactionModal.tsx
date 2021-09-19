@@ -1,9 +1,9 @@
 import React, { } from "react";
-import { Text, StyleSheet, useColorScheme, Pressable, Modal, ScrollView } from "react-native";
+import { Text, StyleSheet, useColorScheme, Pressable, Modal, ScrollView, Image } from "react-native";
 import Colors from "../constants/Colors";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MonumentInfo } from "../types";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { View } from "./Themed";
 
 
 interface TransactionModalProps {
@@ -29,13 +29,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ useModalOpen
     const [modalOpen, setModalOpen] = useModalOpen;
 
     const styles = StyleSheet.create({
-        imgAnim: {
-            width: "100%",
-            maxHeight: 400
-        },
         image: {
             width: "100%",
-            height: "100%",
+            height: 400,
+            marginVertical: 16,
         },
         textbox: {
             margin: 16
@@ -44,11 +41,13 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ useModalOpen
             fontSize: 36,
             marginVertical: 8,
             color: Colors[colorScheme!].title,
+            marginTop: 16
         },
-        owner: {
-            fontSize: 16,
-            color: Colors[colorScheme!].text,
-            marginVertical: 8
+        name: {
+            fontSize: 24,
+            marginVertical: 8,
+            color: Colors[colorScheme!].title,
+            marginTop: 32
         },
         text: {
             fontSize: 16,
@@ -61,7 +60,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ useModalOpen
 
             position: "absolute",
             right: 16,
-            top: 16,
+            top: 32,
 
             zIndex: 1
         },
@@ -72,7 +71,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ useModalOpen
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            marginVertical: 8,
+            marginVertical: 16,
         },
         iconNumValue: {
             display: "flex",
@@ -80,9 +79,13 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ useModalOpen
             alignItems: "center",
             flexGrow: 1
         },
+        transactionValue: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 8,
+        },
         button: {
-            padding: 8,
-
             width: "100%",
         },
         btnBg: {
@@ -109,20 +112,54 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ useModalOpen
 
             <ScrollView style={styles.textbox}>
 
-                <Text style={styles.title}>Transaction</Text>
-                <Text style={styles.owner}>Owned by: {data.owner || ""}</Text>
-                <Text style={styles.owner}>Created by: {data.creator}</Text>
+                <Text style={styles.title}>Transactions</Text>
+
+                <Text style={styles.name}>{data.name}</Text>
+
+                <View style={styles.iconNums}>
+                    <View style={styles.iconNumValue}>
+                        <FontAwesome5 size={24} style={styles.icon} name="eye" color={Colors[colorScheme!].text} />
+                        <Text>{data.views}</Text>
+                    </View>
+                    <View style={styles.iconNumValue}>
+                        <FontAwesome5 size={24} style={styles.icon} name="coins" color={Colors[colorScheme!].text} />
+                        <Text>{data.value}</Text>
+                    </View>
+                    <View style={styles.iconNumValue}>
+                        <FontAwesome5 size={24} style={styles.icon} name="user-tag" color={Colors[colorScheme!].text} />
+                        <Text>{data.creator}</Text>
+                    </View>
+                </View>
+
+
                 <Text style={styles.text}>{data.description}</Text>
+
+                <Image
+                    style={styles.image}
+                    source={{ uri: data.image }}
+                />
+
+                <View style={styles.iconNums}>
+                    <View style={styles.iconNumValue}>
+                        <FontAwesome5 size={24} style={styles.icon} name="tag" color={Colors[colorScheme!].text} />
+                        <Text>{data.views}</Text>
+                    </View>
+                    <View style={styles.iconNumValue}>
+                        <FontAwesome5 size={24} style={styles.icon} name="piggy-bank" color={Colors[colorScheme!].text} />
+                        <Text>{data.value}</Text>
+                    </View>
+                </View>
+
+                <Pressable style={styles.button} onPress={() => {
+                    setModalOpen(true);
+                }}>
+                    <View style={styles.btnBg}>
+                        <Text style={styles.btnText}>Buy Monument</Text>
+                    </View>
+                </Pressable>
 
             </ScrollView>
 
-            {/* <Pressable style={styles.button} onPress={() => {
-                setModalOpen(true);
-            }}>
-                <View style={styles.btnBg}>
-                    <Text style={styles.btnText}>Buy Monument</Text>
-                </View>
-            </Pressable> */}
 
         </Modal>
     );

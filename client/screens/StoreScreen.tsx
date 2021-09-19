@@ -4,31 +4,27 @@ import { MonumentBlock } from '../components/MonumentBlock';
 import { SearchBar } from '../components/SearchBar';
 import { Text, View } from '../components/Themed';
 import { MonumentInfo } from '../types';
+import { getMarketNFTs } from '../blockchain/walletTest';
 
 export default function StoreScreen() {
   const [search, setInput] = React.useState("");
 
-  const data: MonumentInfo[] = [{
-    id: "1",
-    name: "Socrates Statue",
-    owner: "Leo Tian",
-    creator: "Leo Tian",
-    coordinates: { latitude: 51.5078788, longitude: -0.0877321 },
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg",
-    description: " A statue of Socrates. Socrates was a Greek philosopher from Athens who is credited as a founder of Western philosophy and the first moral philosopher of the Western ethical tradition of thought.",
-    value: 0.1,
-    views: 16
-  }, {
-    id: "2",
-    name: "Socrates Painting",
-    owner: "Leo Tian",
-    creator: "Leo Tian",
-    coordinates: { latitude: 51.5078788, longitude: -0.0877321 },
-    image: "https://www.history.com/.image/t_share/MTU3ODc5MDg2NDMzNTEwNzI5/death-of-socrates.jpg",
-    description: " A statue of Socrates. Socrates was a Greek philosopher from Athens who is credited as a founder of Western philosophy and the first moral philosopher of the Western ethical tradition of thought.",
-    value: 0.1,
-    views: 16
-  }];
+  const [data, setData] = React.useState<MonumentInfo[]>([]);
+
+  getMarketNFTs().then((nfts) => {
+    console.log("hello" + nfts);
+    setData(nfts.map((nft: any) => ({
+      id: nft.tokenId,
+      name: nft.title,
+      owner: nft.owner,
+      creator: nft.seller,
+      coordinates: { latitude: nft.lat, longitude: nft.long },
+      image: nft.previewUri,
+      description: nft.description,
+      value: nft.price,
+      views: 0,
+    })))
+  });
 
   const filteredData = data.filter(item => RegExp(search).test(item.name))
 

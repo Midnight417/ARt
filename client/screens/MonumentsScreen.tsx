@@ -1,12 +1,53 @@
 import React, { useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { FlatList, Pressable, SafeAreaView, StyleSheet, useColorScheme, Text } from 'react-native';
 import { View } from '../components/Themed';
 import { MonumentBlock } from "../components/MonumentBlock";
 import { SearchBar } from '../components/SearchBar';
 import { MonumentInfo } from '../types';
+import Colors from '../constants/Colors';
+import { CreateModal } from '../components/CreateModal';
 export default function MonumentsScreen() {
 
   const [search, setInput] = useState("");
+  const colorScheme = useColorScheme();
+
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const styles = StyleSheet.create({
+    container: {
+      display: "flex",
+      alignItems: 'center',
+      marginHorizontal: 20,
+    },
+    scrollView: {
+      width: "100%",
+      position: "relative"
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    list: {
+      paddingTop: 20,
+    },
+    button: {
+        padding: 8,
+  
+        width: "100%",
+    },
+    btnBg: {
+        backgroundColor: Colors[colorScheme!].tabIconSelected,
+        borderRadius: 8,
+    },
+    btnText: {
+        color: Colors[colorScheme!].background,
+  
+        padding: 8,
+  
+        textAlign: "center"
+    }
+  });
+  
 
   const data: MonumentInfo[] = [{
     id: "1",
@@ -36,7 +77,15 @@ export default function MonumentsScreen() {
     <View>
       <SafeAreaView style={styles.container}>
 
-      <SearchBar useInput={[search, setInput]} />
+        <SearchBar useInput={[search, setInput]} />
+
+        <Pressable style={styles.button} onPress={() => {
+          setModalOpen(true);
+        }}>
+          <View style={styles.btnBg}>
+            <Text style={styles.btnText}>{"Create Monument"}</Text>
+          </View>
+        </Pressable>
 
         <FlatList
           directionalLockEnabled
@@ -57,25 +106,8 @@ export default function MonumentsScreen() {
         />
 
       </SafeAreaView>
+
+      <CreateModal useModalOpen={[modalOpen, setModalOpen]}></CreateModal>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    alignItems: 'center',
-    marginHorizontal: 20,
-  },
-  scrollView: {
-    width: "100%",
-    position: "relative"
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  list: {
-    paddingTop: 20,
-  }
-});

@@ -65,11 +65,6 @@ export const StoreModal: React.FC<StoreModalProps> = ({ data, useModalOpen }) =>
             marginVertical: 8,
             color: Colors[colorScheme!].title,
         },
-        owner: {
-            fontSize: 16,
-            color: Colors[colorScheme!].text,
-            marginVertical: 8
-        },
         text: {
             fontSize: 16,
             color: Colors[colorScheme!].text,
@@ -171,10 +166,12 @@ export const StoreModal: React.FC<StoreModalProps> = ({ data, useModalOpen }) =>
                         <FontAwesome5 size={24} style={styles.icon} name="coins" color={Colors[colorScheme!].text} />
                         <Text>{data.value}</Text>
                     </View>
+                    <View style={styles.iconNumValue}>
+                        <FontAwesome5 size={24} style={styles.icon} name="user-tag" color={Colors[colorScheme!].text} />
+                        <Text>{data.creator}</Text>
+                    </View>
                 </View>
 
-                <Text style={styles.owner}>Owned by: {data.owner}</Text>
-                <Text style={styles.owner}>Created by: {data.creator}</Text>
                 <Text style={styles.text}>{data.description}</Text>
             </ScrollView>
 
