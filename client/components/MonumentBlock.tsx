@@ -4,6 +4,7 @@ import { Image, StyleSheet, useColorScheme, Pressable, Dimensions } from "react-
 import Colors from "../constants/Colors";
 import { MonumentModal } from "./MonumentModal";
 import { MonumentInfo } from "../types";
+import { StoreModal } from "./StoreModal";
 
 interface MonumentBlockProps {
     name: string;
@@ -13,10 +14,11 @@ interface MonumentBlockProps {
     pos?: "last";
     btnText?: string;
     data: MonumentInfo;
+    type?: "store" | "owned";
 };
 
 
-export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos, btnText, data }) => {
+export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image, children, pos, btnText, data, type }) => {
     const colorScheme = useColorScheme();
 
     const width = Dimensions.get('window').width - 40;
@@ -104,7 +106,11 @@ export const MonumentBlock: React.FC<MonumentBlockProps> = ({ name, owner, image
                 </View>
             </Pressable>
 
-            <MonumentModal data={data} useModalOpen={[modalOpen, setModalOpen]} />
+            {type == "store"
+                ? <StoreModal data={data} useModalOpen={[modalOpen, setModalOpen]} />
+                : <MonumentModal data={data} useModalOpen={[modalOpen, setModalOpen]} />
+            }
+
         </View>
     );
 };

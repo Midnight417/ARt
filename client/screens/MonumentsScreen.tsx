@@ -15,7 +15,9 @@ export default function MonumentsScreen() {
     creator: "Leo Tian",
     coordinates: { latitude: 51.5078788, longitude: -0.0877321 },
     image: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg",
-    description: " A statue of Socrates. Socrates was a Greek philosopher from Athens who is credited as a founder of Western philosophy and the first moral philosopher of the Western ethical tradition of thought."
+    description: " A statue of Socrates. Socrates was a Greek philosopher from Athens who is credited as a founder of Western philosophy and the first moral philosopher of the Western ethical tradition of thought.",
+    value: 0.1,
+    views: 16
   }, {
     id: "2",
     name: "Socrates Painting",
@@ -23,7 +25,9 @@ export default function MonumentsScreen() {
     creator: "Leo Tian",
     coordinates: { latitude: 51.5078788, longitude: -0.0877321 },
     image: "https://www.history.com/.image/t_share/MTU3ODc5MDg2NDMzNTEwNzI5/death-of-socrates.jpg",
-    description: " A statue of Socrates. Socrates was a Greek philosopher from Athens who is credited as a founder of Western philosophy and the first moral philosopher of the Western ethical tradition of thought."
+    description: " A statue of Socrates. Socrates was a Greek philosopher from Athens who is credited as a founder of Western philosophy and the first moral philosopher of the Western ethical tradition of thought.",
+    value: 0.1,
+    views: 16
   }];
 
   const filteredData = data.filter(item => RegExp(search).test(item.name))
